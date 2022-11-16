@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.PageTitle = "Manage PR Status";
+    ViewBag.Action = "On Process";
+    ViewBag.Controller = "Manage PR";
+}
+<h5 class="card-title">
+    On Process PRs 
+</h5>
+
+<p class="card-text">
+</p>
+@{
+    if (Convert.ToInt32(Session["OfficeID"]) == 2)
+    {
+        <div class="icheck-warning d-inline">
+            <input type="checkbox" id="checkboxCanvass" class="chk">
+            <label for="checkboxCanvass">
+                For Canvass
+            </label>
+        </div>
+        <div class="icheck-gray d-inline">
+            <input type="checkbox" id="checkboxPO" class="chk">
+            <label for="checkboxPO">
+                For Purchase Order
+            </label>
+        </div>
+        <div class="icheck-primary d-inline">
+            <input type="checkbox" id="checkboxORS" class="chk">
+            <label for="checkboxORS">
+                For ORS and DV Preparation
+            </label>
+        </div>
+        <div class="icheck-fuchsia d-inline">
+            <input type="checkbox" id="checkboxIAR" class="chk">
+            <label for="checkboxIAR">
+                For IAR
+            </label>
+        </div>
+    }
+    else if (Convert.ToInt32(Session["OfficeID"]) == 1)
+    {
+        <div class="icheck-indigo d-inline">
+            <input type="checkbox" id="checkboxAPP" class="chk">
+            <label for="checkboxAPP">
+                For APP Certification
+            </label>
+        </div>
+        <div class="icheck-teal d-inline">
+            <input type="checkbox" id="checkboxPR" class="chk">
+            <label for="checkboxPR">
+                For Assignment of PR Number
+            </label>
+        </div>
+        <div class="icheck-secondary d-inline">
+            <input type="checkbox" id="checkboxAbstract" class="chk">
+            <label for="checkboxAbstract">
+                For Abstract of Canvass
+            </label>
+        </div>
+    }
+}
+
+<div class="table-responsive">
+    <table id="dtPrList" class="table table-bordered" style="width:100%"></table>
+</div>
+@Html.Partial("Modal/_SubmitPR")
+@Html.Partial("Modal/_ViewItems")
+@Html.Partial("Modal/_Logs")
+@Html.Partial("Modal/_CreateAOC")
+@Html.Partial("Modal/_ReturnPR")
+@Html.Partial("Modal/_POList")
+
+@section scripts{
+    <script src='@Url.Content("~/Scripts/userdefined/jsOnProcess.js?" + DateTime.Now.Ticks.ToString())'></script>
+}
+

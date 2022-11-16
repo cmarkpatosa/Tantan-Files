@@ -1,0 +1,35 @@
+﻿<div class="modal fade" id="modal-abstractofcanvass">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Please select Bidding Winner</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Supplier</label>
+                    @Html.DropDownList("Suppliers", ViewData["Suppliers"] as SelectList, "", new { @class = "form-control", @id = "ACSupplierID" })
+                </div>
+                <div class="form-group">
+                    <label>Time Opened</label>
+                    <input type="text" class="form-control" id="TBTimeOpened"/>
+                </div>
+                <div class="form-group">
+                    <label>ACT No.</label>
+                    <input type="text" class="form-control" id="TBACT" />
+                </div>
+                <div class="form-group">
+                    <label>ACD No.</label>
+                    <input type="text" class="form-control" id="TBACD" />
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+                <button type="button" id="btnGenerateAbstractOfCanvass" class="btn btn-primary">Print Abstract of Canvass</button>
+            </div>
+        </div>
+    </div>
+</div>
+ 

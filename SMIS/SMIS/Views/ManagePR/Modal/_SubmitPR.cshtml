@@ -1,0 +1,81 @@
+﻿@{
+    var officeID = Convert.ToInt32(Session["OfficeID"]);
+    string role = Convert.ToString(Session["Role"]);
+}
+<form>
+    <div class="modal fade" id="modal-submit" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">PR Submission</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="InputPurpose">Purpose</label>
+                                <textarea class="form-control" id="TBPurpose1" rows="3" name="Purpose" readonly></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Transaction Type</label>
+                                @Html.DropDownList("TransactionTypeID", ViewData["TransactionTypes"] as SelectList, "", new { @class = "form-control", @id = "TBTransactionTypeID", @disabled = "disabled" })
+                            </div>
+                            <div class="form-group">
+                                <label>Amount</label>
+                                <input type="text" id="TBAmount" class="form-control" placeholder="Enter Amount..." name="Amount" readonly>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Route to</label>
+                                    @if (role == "Administrator")
+                                    {
+                                @Html.DropDownList("OfficeID", ViewData["Offices"] as SelectList, "", new { @class = "form-control", @id = "OfficeID" })
+                                    }
+                                    else
+                                    {
+                                        @Html.DropDownList("OfficeID", ViewData["Offices"] as SelectList, "", new { @class = "form-control", @id = "OfficeID" })
+                                    }
+
+                            </div>
+                            <div class="form-group">
+                                <label>Action</label>
+                                @if (officeID == 1 || role == "Administrator")
+                                {
+                                    @Html.DropDownList("StatusID", ViewData["Status"] as SelectList, "", new { @class = "form-control", @id = "StatusID" })
+                                }                                else
+                                {
+                                    @Html.DropDownList("StatusID", ViewData["Status"] as SelectList, "", new { @class = "form-control", @id = "StatusID" })
+                                }
+                            </div>
+                            <div id="dBac">
+                                <div class="form-group">
+                                    <label>PR Number</label>
+                                    <input id="TBPRNumber" type="text" class="form-control" placeholder="Enter PR Number..." name="PRNumber" />
+                                </div>
+                                <div class="form-group">
+                                    <label>PR Date</label>
+                                    <input id="TBPRDate" type="text" name="PRDate" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="mm/dd/yyyy" data-mask />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <h5><b>Remarks</b></h5>
+                                <textarea rows="4" id="TBRemarks" class="form-control" placeholder="Enter remarks..." name="Remarks"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" id="btnSubmitPR" class="btn btn-primary">Submit PR</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+</form>

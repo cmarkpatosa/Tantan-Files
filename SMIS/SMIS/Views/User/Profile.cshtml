@@ -1,0 +1,70 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.PageTitle = "User";
+    ViewBag.Action = "Profile";
+    ViewBag.Controller = "User";
+}
+
+<form action="/User/SaveUser" method="post">
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group mb-3">
+                <label>Division</label>
+                @Html.DropDownList("DivisionID", ViewData["Divisions"] as SelectList, "", new { @class = "form-control", @id = "DivisionID", @placeholder = "ASD", required = (string)null })
+            </div>
+            <div class="input-group mb-3">
+                <input type="text" name="Position" class="form-control" placeholder="Position" required>
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-user"></span>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="input-group mb-3">
+                <input type="text" name="AccountName" class="form-control" placeholder="Full name" required>
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-user"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <input type="text" name="Username" class="form-control" placeholder="Username" readonly>
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-user"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <input type="password" id="password" class="form-control" placeholder="Password" required>
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-lock"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <input type="password" id="confirm_password" name="Password" class="form-control" placeholder="Retype password" required>
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-lock"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- /.col -->
+                <div class="col-3">
+                    <button type="submit" class="btn btn-primary btn-block">Update Profile</button>
+                </div>
+                <!-- /.col -->
+            </div>
+        </div>
+        <div class="col-8">
+            <img src="..." class="rounded mx-auto d-block" alt="...">
+        </div>
+    </div>
+</form>
+

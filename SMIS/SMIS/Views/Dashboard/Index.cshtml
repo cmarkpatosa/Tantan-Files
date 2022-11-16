@@ -1,0 +1,232 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ViewBag.PageTitle = "Dashboard";
+    ViewBag.Action = "Index";
+    ViewBag.Controller = "Dashboard";
+}
+<div class="row">
+    <div class="col-md-3">
+        <label>Year</label>
+        <select class="form-control" id="sYear">
+            @{
+                int year = DateTime.Now.Year;
+                for (int i = 0; i < 3; i++)
+                {
+                    <option value="@year">@year</option>
+                    year--;
+                }
+            }
+        </select>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col">
+        <canvas id="sales-chart" height="200"></canvas>
+    </div>
+    <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
+        <h4>Recent Activity</h4>
+        <div class="row">
+            @foreach (var item in ViewBag.RecentActivities)
+            {
+                string AccountName = item?.GetType().GetProperty("AccountName")?.GetValue(item, null); 
+                string Purpose = item?.GetType().GetProperty("Purpose")?.GetValue(item, null);
+                DateTime DateSubmitted = item?.GetType().GetProperty("DateSubmitted")?.GetValue(item, null);
+                string Status = item?.GetType().GetProperty("Status")?.GetValue(item, null);
+                string DivisionName = item?.GetType().GetProperty("DivisionName")?.GetValue(item, null);
+                decimal Amount = item?.GetType().GetProperty("Amount")?.GetValue(item, null);
+                string Remarks = item?.GetType().GetProperty("Remarks")?.GetValue(item, null);
+
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="user-block card-title">
+                                <img class="img-circle img-bordered-sm" src="../../dist/img/user1-128x128.jpg" alt="user image">
+                                <span class="username">
+                                    <a href="#">@AccountName (@DivisionName) <br /> </a>
+                                    <i>@Status</i>
+                                </span>
+                                <span class="description">@DateSubmitted.ToShortDateString() @DateSubmitted.ToLongTimeString()</span>
+                            </div>
+                            <!-- /.user-block -->
+                        </div>
+                        <div class="card-body">
+                            <div class="post">
+
+                                <dl>
+                                    <dt>Purpose</dt>
+                                    <dd>@Purpose</dd>
+                                    <dt>
+                                        Amount
+                                    </dt>
+                                    <dd>Php @Amount.ToString("N2")</dd>
+                                </dl>
+                            </div>
+                        </div>
+                        @*<!-- /.card-body -->
+                            <div class="card-footer">
+                                Footer
+                            </div>
+                            <!-- /.card-footer-->*@
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
+        <div>
+            <div class="info-box mb-3 bg-success">
+                <span class="info-box-icon"><i class="far fa-file"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Completed</span>
+                    <span class="info-box-number">@ViewBag.Completed</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- Info Boxes Style 2 -->
+            <div class="info-box mb-3 bg-warning">
+                <span class="info-box-icon"><i class="far fa-file"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Preparing</span>
+                    <span class="info-box-number">@ViewBag.Prepared</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+            <div class="info-box mb-3 bg-primary">
+                <span class="info-box-icon"><i class="fas fa-tasks"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">On Process</span>
+                    <span class="info-box-number">@ViewBag.OnProcess</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+            <div class="info-box mb-3 bg-danger">
+                <span class="info-box-icon"><i class="fas fa-undo-alt"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Returned</span>
+                    <span class="info-box-number">@ViewBag.Returned</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+            <div class="info-box mb-3 bg-gradient-gray">
+                <span class="info-box-icon"><i class="fas fa-shopping-cart"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">For Purchase Order</span>
+                    <span class="info-box-number">@ViewBag.ForPurchaseOrder</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <hr />
+            <h3 class="text-primary"> SMIS</h3>
+            <p class="text-muted">
+                The Supply Management and Information System (SMIS) is a web based application that can be able to record and track purchase request done by the DILG focal person to be submitted and reviewed by different offices in the Department.
+            </p>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        'use strict'
+        $("#sYear").val(@ViewBag.year);
+        $("#sYear").change(function () {
+            var o = window.location;
+            o.href = o.origin + o.pathname + "?year=" + this.value
+        });
+        var ticksStyle = {
+            fontColor: '#495057',
+            fontStyle: 'bold'
+        }
+
+        var mode = 'index'
+        var intersect = true
+        var $salesChart = $('#sales-chart');
+
+        var year = $('#sYear').val();
+        $salesChart.height(500);
+        $.ajax({
+            url: '/Dashboard/GetPRStatus?year=' + year,
+            method: "GET",
+            success: function (data) {
+                var salesChart = new Chart($salesChart, {
+                    type: 'bar',
+                    data: data,
+                    options: {
+                        title: {
+                            display: true,
+                            text: 'Purchase Request Status',
+                            position: 'top',
+                            fontSize: 22,
+                            fontColor: "#FF5733",
+                        },
+                        maintainAspectRatio: false,
+                        tooltips: {
+                            mode: mode,
+                            intersect: intersect
+                        },
+                        hover: {
+                            mode: mode,
+                            intersect: intersect
+                        },
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                fontColor: "#000080",
+                            }
+                        },
+                        scales: {
+                            yAxes: [{
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Total number of PRs',
+                                },
+                                gridLines: {
+                                    display: true,
+                                    lineWidth: '4px',
+                                    color: 'rgba(0, 0, 0, .2)',
+                                    zeroLineColor: 'transparent'
+                                },
+                                ticks: $.extend({
+                                    //min: 0,
+                                    //max: this.max,// Your absolute max value
+                                    //callback: function (value) {
+                                    //    return (value / this.max * 100).toFixed(0) + '%'; // convert it to percentage
+                                    //},
+                                    beginAtZero: true,
+                                    fontSize: 12,
+                                    userCallback: function (label, index, labels) {
+                                        // when the floored value is the same as the value we have a whole number
+                                        if (Math.floor(label) === label) {
+                                            return label;
+                                        }
+                                    },
+
+                                }, ticksStyle)
+                            }],
+                            xAxes: [{
+                                display: true,
+                                gridLines: {
+                                    display: true
+                                },
+                                ticks: {
+                                    fontSize: 10
+                                }
+                            }]
+                        }
+                    }
+                })
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        });
+    });
+</script>

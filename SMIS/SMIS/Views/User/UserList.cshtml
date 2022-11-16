@@ -1,0 +1,22 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ViewBag.PageTitle = "Manage User";
+    ViewBag.Action = "Accounts";
+    ViewBag.Controller = "Users";
+}
+<h5 class="card-title">
+    User Accounts
+</h5>
+<p class="card-text">
+</p>
+<table id="dtUserList" class="table table-bordered" style="width:100%"></table>
+
+
+@Html.Partial("Modal/_NewUser")
+@section scripts{
+    <script src='@Url.Content("~/Scripts/userdefined/jsUserList.js")'></script>
+}
+
+

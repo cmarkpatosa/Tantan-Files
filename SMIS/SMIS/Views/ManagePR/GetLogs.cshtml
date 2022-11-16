@@ -1,0 +1,252 @@
+﻿@model List<SMIS.Log>
+<div>
+    <i class="fas fa-play bg-green"></i>
+</div>
+<br />
+@{
+    var dates = Model.ToList().GroupBy(x => x.TransactionDate.ToShortDateString()).Select(x => x.Key);
+    foreach (var item in dates)
+    {
+          <!-- timeline time label -->
+        <div class="time-label">
+            <span class="bg-gradient-blue">@Convert.ToDateTime(item).ToString("dddd, dd MMMM yyyy")</span>
+        </div>
+        foreach (var o in Model)
+        {
+            if (item == o.TransactionDate.ToShortDateString())
+            {
+            <!-- timeline item -->
+                <div>
+                    @switch (o.StatusID)
+                    {
+                        case 1:
+                            <i class="fas fa-coins bg-yellow"></i>
+                            break;
+                        case 2:
+                        case 12:
+                        case 13:
+                            <i class="fas fa-file-signature bg-gray"></i>
+                            break;
+                        case 4:
+                            <i class="fas fa-file-alt bg-orange"></i>
+                            break;
+                        case 3:
+                            <i class="fas fa-list-ol bg-indigo"></i>
+                            break;
+                        case 9:
+                            <i class="fas fa-reply bg-maroon"></i>
+                            break;
+                        case 5:
+                            <i class="fas fa-copy bg-purple"></i>
+                            break;
+                        case 6:
+                            <i class="fas fa-shopping-cart bg-olive"></i>
+                            break;
+                        case 10:
+                            <i class="fas fa-ban bg-red"></i>
+                            break;
+                        case 14:
+                            @*<i class="far fa-handshake bg-blue"></i>*@
+                            <i class="fas fa-hands-helping bg-blue"></i>
+                            break;
+                        case 11:
+                            <i class="fas fa-clipboard-check bg-orange"></i>
+                            break;
+                        default:
+                            <i class="fab fa-joget bg-green"></i>
+                            break;
+                    }
+                    <div class="timeline-item">
+                        <span class="time">@*<i class="fas fa-clock"></i> @o.TransactionDate.ToString("hh:mm tt")*@</span>
+                        <h3 class="timeline-header"><a href="#">@o.UserAccount.AccountName</a> @o.Status.Status1</h3>
+                        <div class="timeline-body">
+                            <dl>
+                                @switch (o.StatusID)
+                                {
+                                    case 15:
+                                        <dt>Date and Time Prepared</dt>
+                                        <da>@o.PurchaseRequest.DatePrepared.Value.ToLongDateString() @o.PurchaseRequest.DatePrepared.Value.ToLongTimeString()</da>
+                                        <dt>Purpose</dt>
+                                        <da>@o.PurchaseRequest.Purpose</da>
+                                        <dt>Transaction Type</dt>
+                                        <da>@o.PurchaseRequest.TransactionType.TransactionType1</da>
+                                        <dt>Amount</dt>
+                                        <da> @string.Format("{0:C}", o.PurchaseRequest.Amount).Replace("$", "₱")</da>
+                                        break;
+                                    case 14:
+                                        if (o.Remarks != null)
+                                        {
+                                            <dt>Remarks</dt>
+                                            <da>@o.Remarks</da>
+                                        }
+                                        <dt>Date and Time Received</dt>
+                                        <da>@o.TransactionDate.ToLongDateString() @o.TransactionDate.ToLongTimeString()</da>
+                                        break;
+                                    case 10:
+                                        <dt>Date and Time PR Cancelled</dt>
+                                        <da>@o.TransactionDate.ToLongDateString() @o.TransactionDate.ToLongTimeString()</da>
+                                        if (o.Remarks != null)
+                                        {
+                                            <dt>Reason</dt>
+                                            <da>@o.Remarks</da>
+                                        }
+                                        break;
+                                    case 9:
+                                        <dt>Date and Time PR Returned to Concerned Division</dt>
+                                        <da>@o.TransactionDate.ToLongDateString() @o.TransactionDate.ToLongTimeString()</da>
+                                        if (o.Remarks != null)
+                                        {
+                                            <dt>Reason</dt>
+                                            <da>@o.Remarks</da>
+                                        }
+                                        break;
+                                    default:
+                                        if (o.Remarks != null)
+                                        {
+                                            <dt>Remarks</dt>
+                                            <da>@o.Remarks</da>
+                                        }
+                                        <dt>Date and Time PR Release</dt>
+                                        <da>@o.TransactionDate.ToLongDateString() @o.TransactionDate.ToLongTimeString()</da>
+                                        break;
+                                }
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+             <!-- END timeline item -->
+            }
+        }
+    }
+}
+
+<!-- END timeline item -->
+<div>
+    <i class="fas fa-hand-paper bg-red"></i>
+</div>
+@*@model List<SMIS.AuditLog>
+
+    <div>
+        <i class="fas fa-play bg-green"></i>
+    </div>
+    <br />
+    <!-- END timeline item -->
+    @{
+        var dates = Model.ToList().GroupBy(x => x.DateSubmitted.Value.ToShortDateString()).Select(x => x.Key);
+        foreach (var item in dates)
+        {
+            <!-- timeline time label -->
+            <div class="time-label">
+                <span class="bg-gradient-blue">@Convert.ToDateTime(item).ToString("dddd, dd MMMM yyyy")</span>
+            </div>
+            foreach (var o in Model)
+            {
+                if (item == o.DateSubmitted.Value.ToShortDateString())
+                {
+                <!-- timeline item -->
+                    <div>
+
+                        @switch (o.Status == null ? "" : o.Status.Status1)
+                        {
+                            case "For Budget Allocation (Budget Officer)":
+                                <i class="fas fa-coins bg-yellow"></i>
+                                break;
+                            case "For Signatory":
+                                <i class="fas fa-file-signature bg-gray"></i>
+                                break;
+                            case "For Canvass (Supply Officer)":
+                                <i class="fas fa-file-alt bg-orange"></i>
+                                break;
+                            case "For Assignment of PR Number (BAC)":
+                                <i class="fas fa-list-ol bg-indigo"></i>
+                                break;
+                            case "Returned to Concerned Division":
+                                <i class="fas fa-reply bg-maroon"></i>
+                                break;
+                            case "For Abstract of Canvass (BAC)":
+                                <i class="fas fa-copy bg-purple"></i>
+                                break;
+                            case "For Purchase Order (Supply)":
+                                <i class="fas fa-shopping-cart bg-olive"></i>
+                                break;
+                            case "Cancelled":
+                                <i class="fas fa-ban bg-red"></i>
+                                break;
+                            default:
+                                <i class="fab fa-joget bg-green"></i>
+                                break;
+                        }
+                        <div class="timeline-item">
+                            <span class="time"><i class="fas fa-clock"></i> @o.DateSubmitted.Value.ToString("hh:mm tt")</span>
+                            <h3 class="timeline-header"><a href="#">@o.UserAccount.AccountName</a> @(o.Status == null ? " Prepared PR" : o.Status.Status1)</h3>
+                            <div class="timeline-body">
+                                <dl>
+                                    @if (o.StatusID == 15)
+                                    {
+                                        <dt>Purpose</dt>
+                                        <da>@o.PurchaseRequest.Purpose</da>
+                                        <dt>Transaction Type</dt>
+                                        <da>@o.PurchaseRequest.TransactionType.TransactionType1</da>
+                                        <dt>Amount</dt>
+                                        <da> @string.Format("{0:C}", o.PurchaseRequest.Amount).Replace("$", "₱") </da>
+                                    }
+                                    else if (o.StatusID == 9)
+                                    {
+                                        <dt>Remarks</dt>
+                                        <da>@o.Remarks</da>
+                                        <dt>Date Returned to Concerned Division</dt>
+                                        <da>@o.DateSubmitted</da>
+                                    }
+                                    else if (o.StatusID == 10)
+                                    {
+                                        <dt>Remarks</dt>
+                                        <da>@o.Remarks</da>
+                                        <dt>Date Cancelled</dt>
+                                        <da>@o.DateSubmitted</da>
+                                    }
+                                    else
+                                    {
+                                        if (o.StatusID == 3)
+                                        {
+                                            <dt>PR Number</dt>
+                                            <da>@o.PurchaseRequest.PRNumber</da>
+
+                                            <dt>Date Assigned</dt>
+                                            <da>@o.PurchaseRequest.DatePRAssigned</da>
+                                        }
+                                        <dt>Remarks</dt>
+                                        <da>
+                                            @o.Remarks
+                                        </da>
+                                        <dt>
+                                            Time Received
+                                        </dt>
+                                        <da>
+                                           @o.DateReceived
+                                        </da>
+                                        if (o.Status.Status1 != "For Purchase Order (Supply)")
+                                        {
+                                                    <dt>
+                                                        Document Released
+                                                    </dt>
+
+                                                    <da>
+                                                        @o.DateRelease
+                                                    </da>
+                                        }
+                                    }
+
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                <!-- END timeline item -->
+                                                                    }
+                                                                }
+                                                            }
+    }
+    <!-- END timeline item -->
+    <div>
+        <i class="fas fa-hand-paper bg-red"></i>
+    </div>*@
+

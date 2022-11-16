@@ -1,0 +1,105 @@
+﻿@{
+    ViewBag.PageTitle = "Manage PR";
+    ViewBag.Action = "Create PR";
+    ViewBag.Controller = "Manage PR";
+}
+
+<h5 class="card-title">
+    @*<button class="btn btn-block btn-success btn-flat" data-toggle="modal" data-target="#modal-create"><i class="fas fa-plus-circle"></i> Create PR</button>*@
+</h5>
+<p class="card-text">
+</p>
+
+<ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="custom-content-below-home-tab" data-toggle="pill" href="#custom-content-below-home" role="tab" aria-controls="custom-content-below-home" aria-selected="true">Create PR</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="custom-content-below-profile-tab" data-toggle="pill" href="#custom-content-below-profile" role="tab" aria-controls="custom-content-below-profile" aria-selected="false">
+            Prepared PRs
+            <span class="badge bg-warning right lblpreparing">0</span>
+            <span class="badge bg-primary right lblorsdv">0</span>
+            <span class="badge bg-success right lblOnProcess">0</span>
+            <span class="badge bg-danger right lblreturned">0</span>
+        </a>
+    </li>
+</ul>
+<div class="tab-content" id="custom-content-below-tabContent">
+    <br />
+    <div class="tab-pane fade show active" id="custom-content-below-home" role="tabpanel" aria-labelledby="custom-content-below-home-tab">
+        <div class="row">
+            <div class="col-4">
+                <input type="hidden" id="hidPurchaseRequestID" value="0" />
+                <div class="form-group">
+                    <label>Purpose</label>
+                    <textarea rows="4" id="TBPurpose"  class="form-control" placeholder="Please indicate the date of activity on this field..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Transaction Type</label>
+                    @Html.DropDownList("TransactionTypeID", ViewData["TransactionTypes"] as SelectList, "", new { @class = "form-control", @required = "required", @id = "TransactionTypeID" })
+                </div>
+                <div class="form-group">
+                    <label>Total</label>
+                    <input type="text" readonly class="form-control" id="TBTotal" />
+                </div>
+                <button id="btnCreatePR" class="btn btn-primary">Create PR</button>
+                <button id="btnClear" class="btn btn-default">Clear</button>
+            </div>
+            <div class="col-8">
+                <div class="form-group">
+                    <label>Item List</label>
+                    <input type="hidden" id="hidPurchaseRequestDetailID" />
+                    <table id="dtItems" class="table table-bordered table-hover" style="width: 100%"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="custom-content-below-profile" role="tabpanel" aria-labelledby="custom-content-below-profile-tab">
+        <div class="">
+            <div class="icheck-warning d-inline">
+                <input type="checkbox" id="checkboxPreparing" class="chk">
+                <label for="checkboxPreparing">
+                    Preparing
+                </label>
+            </div>
+            <div class="icheck-primary d-inline">
+                <input type="checkbox" id="checkboxORS" class="chk">
+                <label for="checkboxORS">
+                    For Signatory (Division Chief)
+                </label>
+            </div>
+            <div class="icheck-danger d-inline">
+                <input type="checkbox" id="checkboxReturn" class="chk">
+                <label for="checkboxReturn">
+                    Returned to Concerned Division
+                </label>
+            </div>
+            @*<div class="icheck-secondary d-inline">
+                <input type="checkbox" id="checkboxCancel" class="chk">
+                <label for="checkboxCancel">
+                    Cancelled
+                </label>
+            </div>*@
+        </div>
+        <div class="table-responsive">
+            <table id="dtPrList" class="table table-bordered" style="width:100%"></table>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Modal/_NewItem")
+@Html.Partial("Modal/_ViewItems")
+@Html.Partial("Modal/_SubmitPR")
+@Html.Partial("Modal/_Logs")
+@Html.Partial("Modal/_ImportCSV")
+@Html.Partial("Modal/_POList")
+@Html.Partial("Modal/_PreparedBy")
+
+
+<script>
+    var role = '@Session["Role"]';
+</script>
+
+@section scripts{
+    <script src='@Url.Content("~/Scripts/userdefined/jsCreatePR.js?"+ DateTime.Now.Ticks.ToString())'></script>
+}

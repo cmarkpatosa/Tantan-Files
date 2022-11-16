@@ -1,0 +1,56 @@
+﻿<form>
+    <div class="modal fade" id="modal-user">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">User Account Detail</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="hidUserID" />
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Account Name</label>
+                                <input type="text" id="TBAccountName" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input type="text" id="TBUsername" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="text" id="TBPassword" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Division</label>
+                                @Html.DropDownList("DivisionID", ViewData["Divisions"] as SelectList, "", new { @class = "form-control", @id = "DivisionID" })
+                            </div>
+                            <div class="form-group">
+                                <label>Office</label>
+                                @Html.DropDownList("OfficeID", ViewData["Offices"] as SelectList, "", new { @class = "form-control", @id = "OfficeID" })
+                            </div>
+                            <div class="form-group">
+                                <label>Role</label>
+                                <select class="form-control" id="SRole">
+                                    <option value="Administrator">Administrator</option>
+                                    <option value="Process Owner">Process Owner</option>
+                                    <option value="Focal Person">Focal Person</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" id="btnSave" class="btn btn-primary">Save Changes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+</form>
