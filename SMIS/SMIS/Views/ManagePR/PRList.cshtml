@@ -1,0 +1,35 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ViewBag.PageTitle = "PR Status";
+    ViewBag.Action = "Manage PR";
+    ViewBag.Controller = "PRList";
+}
+<h5 class="card-title">
+        @*PR List*@
+</h5>
+<p class="card-text">
+</p>
+<div class="table-responsive">
+    @*<div class="icheck-primary d-inline">
+        <input type="checkbox" id="checkboxPreparing" class="chk">
+        <label for="checkboxPreparing">
+            Preparing
+        </label>
+    </div>
+    <div class="icheck-danger d-inline">
+        <input type="checkbox" id="checkboxCancel">
+        <label for="checkboxCancel">
+            View All Cancelled PRs
+        </label>
+    </div>*@
+    <div class="table-responsive">
+        <table id="dtPrList" class="table table-bordered" style="width:100%"></table>
+    </div>
+</div>
+@Html.Partial("Modal/_Logs")
+@Html.Partial("Modal/_ViewItems")
+@section scripts{
+    <script src='@Url.Content("~/Scripts/userdefined/jsPRList.js?" + DateTime.Now.Ticks.ToString())'></script>
+}

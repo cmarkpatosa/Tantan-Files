@@ -1,0 +1,28 @@
+﻿.dtactive {
+    background-color: #F5B041 !important;
+}
+
+td.details-control {
+    background: url('/images/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    background: url('/images/details_close.png') no-repeat center center;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding : 0px;
+    margin-left: 0px;
+    display: inline;
+    border: 0px;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    border: 0px;
+}
+
+.table.dataTable  {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 12px;
+}
+
+

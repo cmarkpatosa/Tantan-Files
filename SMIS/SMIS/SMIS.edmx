@@ -1,0 +1,1260 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SMISModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Activity">
+          <Key>
+            <PropertyRef Name="ActivityID" />
+          </Key>
+          <Property Name="ActivityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ActivityTitle" Type="nvarchar(max)" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="ActivityDetailID">
+          <Key>
+            <PropertyRef Name="ActivityDetailID" />
+          </Key>
+          <Property Name="ActivityDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ActivityID" Type="int" />
+          <Property Name="PurchaseRequestID" Type="int" />
+          <Property Name="POAmount" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="Canvass">
+          <Key>
+            <PropertyRef Name="CanvassID" />
+          </Key>
+          <Property Name="CanvassID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="DateCanvass" Type="datetime" />
+          <Property Name="SupplierID" Type="int" />
+          <Property Name="PurchaseRequestID" Type="int" />
+          <Property Name="Canvasser" Type="nvarchar" MaxLength="100" />
+          <Property Name="Winner" Type="bit" />
+          <Property Name="TimeOpened" Type="nvarchar" MaxLength="50" />
+          <Property Name="ACTNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="ACDNo" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="CanvassDetail">
+          <Key>
+            <PropertyRef Name="CanvassDetailID" />
+          </Key>
+          <Property Name="CanvassDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CanvassID" Type="int" />
+          <Property Name="PurchaseRequestDetailID" Type="int" />
+          <Property Name="UnitPrice" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="Division">
+          <Key>
+            <PropertyRef Name="DivisionID" />
+          </Key>
+          <Property Name="DivisionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DivisionName" Type="varchar" MaxLength="50" />
+          <Property Name="DivisionColor" Type="varchar" MaxLength="7" />
+          <Property Name="DivisionChief" Type="varchar" MaxLength="100" />
+          <Property Name="Designation" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Logs">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Name="LogID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PurchaseRequestID" Type="int" />
+          <Property Name="StatusID" Type="int" Nullable="false" />
+          <Property Name="TransactionDate" Type="datetime" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="OfficeID" Type="int" />
+          <Property Name="Remarks" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Office">
+          <Key>
+            <PropertyRef Name="OfficeID" />
+          </Key>
+          <Property Name="OfficeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DivisionID" Type="int" />
+          <Property Name="OfficeName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PurchaseOrder">
+          <Key>
+            <PropertyRef Name="PurchaseOrderID" />
+          </Key>
+          <Property Name="PurchaseOrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PurchaseRequestID" Type="int" />
+          <Property Name="PurchaseOrderDate" Type="datetime" />
+          <Property Name="SupplierID" Type="int" />
+          <Property Name="ModeofProcurement" Type="nvarchar" MaxLength="50" />
+          <Property Name="PlaceofDelivery" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateofDelivery" Type="nvarchar" MaxLength="50" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="UserID" Type="int" />
+        </EntityType>
+        <EntityType Name="PurchaseOrderDetail">
+          <Key>
+            <PropertyRef Name="PurchaseOrderDetailID" />
+          </Key>
+          <Property Name="PurchaseOrderDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PurchaseOrderID" Type="int" />
+          <Property Name="ActivityDate" Type="datetime" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="500" />
+          <Property Name="Specification" Type="nvarchar(max)" />
+          <Property Name="Unit" Type="varchar" MaxLength="50" />
+          <Property Name="Quantity" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="UnitCost" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalCost" Type="decimal" Precision="37" Scale="6" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="PurchaseRequest">
+          <Key>
+            <PropertyRef Name="PurchaseRequestID" />
+          </Key>
+          <Property Name="PurchaseRequestID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ControlNumber" Type="varchar" MaxLength="50" />
+          <Property Name="PRNumber" Type="varchar" MaxLength="20" />
+          <Property Name="PreparedBy" Type="int" />
+          <Property Name="DatePRAssigned" Type="datetime" />
+          <Property Name="DatePrepared" Type="datetime" />
+          <Property Name="DivisionID" Type="int" Nullable="false" />
+          <Property Name="Purpose" Type="varchar(max)" />
+          <Property Name="TransactionTypeID" Type="int" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="StatusID" Type="int" />
+          <Property Name="Remarks" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsReceived" Type="bit" />
+          <Property Name="IsCancelled" Type="bit" />
+          <Property Name="ForRevision" Type="bit" />
+          <Property Name="UserID" Type="int" />
+        </EntityType>
+        <EntityType Name="PurchaseRequestDetail">
+          <Key>
+            <PropertyRef Name="PurchaseRequestDetailID" />
+          </Key>
+          <Property Name="PurchaseRequestDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PurchaseRequestID" Type="int" />
+          <Property Name="ActivityDate" Type="datetime" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="500" />
+          <Property Name="Specification" Type="nvarchar(max)" />
+          <Property Name="Unit" Type="varchar" MaxLength="50" />
+          <Property Name="Quantity" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="UnitCost" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalCost" Type="decimal" Precision="37" Scale="6" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="Signatory">
+          <Key>
+            <PropertyRef Name="SignatoryID" />
+          </Key>
+          <Property Name="SignatoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fullname" Type="varchar" MaxLength="100" />
+          <Property Name="Position" Type="varchar" MaxLength="80" />
+          <Property Name="ReportSignatory" Type="varchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="StatusID" />
+          </Key>
+          <Property Name="StatusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="500" />
+          <Property Name="OfficeID" Type="int" />
+          <Property Name="Step" Type="smallint" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="SupplierID" />
+          </Key>
+          <Property Name="SupplierID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SupplierName" Type="nvarchar" MaxLength="150" />
+          <Property Name="Address" Type="nvarchar" MaxLength="150" />
+          <Property Name="TIN" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TransactionType">
+          <Key>
+            <PropertyRef Name="TransactionTypeID" />
+          </Key>
+          <Property Name="TransactionTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransactionType" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="UserAccount">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccountName" Type="varchar" MaxLength="100" />
+          <Property Name="Position" Type="varchar" MaxLength="60" />
+          <Property Name="DivisionID" Type="int" />
+          <Property Name="OfficeID" Type="int" />
+          <Property Name="Username" Type="varchar" MaxLength="15" />
+          <Property Name="Password" Type="varchar" MaxLength="15" />
+          <Property Name="Role" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Canvass_PurchaseRequest">
+          <End Role="PurchaseRequest" Type="Self.PurchaseRequest" Multiplicity="0..1" />
+          <End Role="Canvass" Type="Self.Canvass" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseRequest">
+              <PropertyRef Name="PurchaseRequestID" />
+            </Principal>
+            <Dependent Role="Canvass">
+              <PropertyRef Name="PurchaseRequestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Canvass_Supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="Canvass" Type="Self.Canvass" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierID" />
+            </Principal>
+            <Dependent Role="Canvass">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Canvass_UserAccount">
+          <End Role="UserAccount" Type="Self.UserAccount" Multiplicity="0..1" />
+          <End Role="Canvass" Type="Self.Canvass" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Canvass">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CanvassDetail_Canvass">
+          <End Role="Canvass" Type="Self.Canvass" Multiplicity="0..1" />
+          <End Role="CanvassDetail" Type="Self.CanvassDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Canvass">
+              <PropertyRef Name="CanvassID" />
+            </Principal>
+            <Dependent Role="CanvassDetail">
+              <PropertyRef Name="CanvassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CanvassDetail_PurchaseRequestDetail">
+          <End Role="PurchaseRequestDetail" Type="Self.PurchaseRequestDetail" Multiplicity="0..1" />
+          <End Role="CanvassDetail" Type="Self.CanvassDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseRequestDetail">
+              <PropertyRef Name="PurchaseRequestDetailID" />
+            </Principal>
+            <Dependent Role="CanvassDetail">
+              <PropertyRef Name="PurchaseRequestDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Logs_PurchaseRequest">
+          <End Role="PurchaseRequest" Type="Self.PurchaseRequest" Multiplicity="0..1" />
+          <End Role="Logs" Type="Self.Logs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseRequest">
+              <PropertyRef Name="PurchaseRequestID" />
+            </Principal>
+            <Dependent Role="Logs">
+              <PropertyRef Name="PurchaseRequestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Logs_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="1" />
+          <End Role="Logs" Type="Self.Logs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="Logs">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Logs_UserAccount">
+          <End Role="UserAccount" Type="Self.UserAccount" Multiplicity="1" />
+          <End Role="Logs" Type="Self.Logs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Logs">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrder_PurchaseRequest">
+          <End Role="PurchaseRequest" Type="Self.PurchaseRequest" Multiplicity="0..1" />
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseRequest">
+              <PropertyRef Name="PurchaseRequestID" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="PurchaseRequestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrder_Supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierID" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrderDetail_PurchaseOrder">
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="0..1" />
+          <End Role="PurchaseOrderDetail" Type="Self.PurchaseOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrder">
+              <PropertyRef Name="PurchaseOrderID" />
+            </Principal>
+            <Dependent Role="PurchaseOrderDetail">
+              <PropertyRef Name="PurchaseOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequest_Division">
+          <End Role="Division" Type="Self.Division" Multiplicity="1" />
+          <End Role="PurchaseRequest" Type="Self.PurchaseRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Division">
+              <PropertyRef Name="DivisionID" />
+            </Principal>
+            <Dependent Role="PurchaseRequest">
+              <PropertyRef Name="DivisionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequest_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="PurchaseRequest" Type="Self.PurchaseRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="PurchaseRequest">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequest_TransactionType">
+          <End Role="TransactionType" Type="Self.TransactionType" Multiplicity="0..1" />
+          <End Role="PurchaseRequest" Type="Self.PurchaseRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransactionType">
+              <PropertyRef Name="TransactionTypeID" />
+            </Principal>
+            <Dependent Role="PurchaseRequest">
+              <PropertyRef Name="TransactionTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequest_UserAccount">
+          <End Role="UserAccount" Type="Self.UserAccount" Multiplicity="0..1" />
+          <End Role="PurchaseRequest" Type="Self.PurchaseRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="PurchaseRequest">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequestDetail_PurchaseRequest">
+          <End Role="PurchaseRequest" Type="Self.PurchaseRequest" Multiplicity="0..1" />
+          <End Role="PurchaseRequestDetail" Type="Self.PurchaseRequestDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseRequest">
+              <PropertyRef Name="PurchaseRequestID" />
+            </Principal>
+            <Dependent Role="PurchaseRequestDetail">
+              <PropertyRef Name="PurchaseRequestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAccount_Division">
+          <End Role="Division" Type="Self.Division" Multiplicity="0..1" />
+          <End Role="UserAccount" Type="Self.UserAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Division">
+              <PropertyRef Name="DivisionID" />
+            </Principal>
+            <Dependent Role="UserAccount">
+              <PropertyRef Name="DivisionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SMISModelStoreContainer">
+          <EntitySet Name="Activity" EntityType="Self.Activity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ActivityDetailID" EntityType="Self.ActivityDetailID" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Canvass" EntityType="Self.Canvass" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CanvassDetail" EntityType="Self.CanvassDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Division" EntityType="Self.Division" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Office" EntityType="Self.Office" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseOrder" EntityType="Self.PurchaseOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseOrderDetail" EntityType="Self.PurchaseOrderDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseRequest" EntityType="Self.PurchaseRequest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseRequestDetail" EntityType="Self.PurchaseRequestDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Signatory" EntityType="Self.Signatory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TransactionType" EntityType="Self.TransactionType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserAccount" EntityType="Self.UserAccount" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Canvass_PurchaseRequest" Association="Self.FK_Canvass_PurchaseRequest">
+            <End Role="PurchaseRequest" EntitySet="PurchaseRequest" />
+            <End Role="Canvass" EntitySet="Canvass" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Canvass_Supplier" Association="Self.FK_Canvass_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="Canvass" EntitySet="Canvass" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Canvass_UserAccount" Association="Self.FK_Canvass_UserAccount">
+            <End Role="UserAccount" EntitySet="UserAccount" />
+            <End Role="Canvass" EntitySet="Canvass" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CanvassDetail_Canvass" Association="Self.FK_CanvassDetail_Canvass">
+            <End Role="Canvass" EntitySet="Canvass" />
+            <End Role="CanvassDetail" EntitySet="CanvassDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CanvassDetail_PurchaseRequestDetail" Association="Self.FK_CanvassDetail_PurchaseRequestDetail">
+            <End Role="PurchaseRequestDetail" EntitySet="PurchaseRequestDetail" />
+            <End Role="CanvassDetail" EntitySet="CanvassDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Logs_PurchaseRequest" Association="Self.FK_Logs_PurchaseRequest">
+            <End Role="PurchaseRequest" EntitySet="PurchaseRequest" />
+            <End Role="Logs" EntitySet="Logs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Logs_Status" Association="Self.FK_Logs_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Logs" EntitySet="Logs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Logs_UserAccount" Association="Self.FK_Logs_UserAccount">
+            <End Role="UserAccount" EntitySet="UserAccount" />
+            <End Role="Logs" EntitySet="Logs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrder_PurchaseRequest" Association="Self.FK_PurchaseOrder_PurchaseRequest">
+            <End Role="PurchaseRequest" EntitySet="PurchaseRequest" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrder_Supplier" Association="Self.FK_PurchaseOrder_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrderDetail_PurchaseOrder" Association="Self.FK_PurchaseOrderDetail_PurchaseOrder">
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+            <End Role="PurchaseOrderDetail" EntitySet="PurchaseOrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequest_Division" Association="Self.FK_PurchaseRequest_Division">
+            <End Role="Division" EntitySet="Division" />
+            <End Role="PurchaseRequest" EntitySet="PurchaseRequest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequest_Status" Association="Self.FK_PurchaseRequest_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="PurchaseRequest" EntitySet="PurchaseRequest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequest_TransactionType" Association="Self.FK_PurchaseRequest_TransactionType">
+            <End Role="TransactionType" EntitySet="TransactionType" />
+            <End Role="PurchaseRequest" EntitySet="PurchaseRequest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequest_UserAccount" Association="Self.FK_PurchaseRequest_UserAccount">
+            <End Role="UserAccount" EntitySet="UserAccount" />
+            <End Role="PurchaseRequest" EntitySet="PurchaseRequest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequestDetail_PurchaseRequest" Association="Self.FK_PurchaseRequestDetail_PurchaseRequest">
+            <End Role="PurchaseRequest" EntitySet="PurchaseRequest" />
+            <End Role="PurchaseRequestDetail" EntitySet="PurchaseRequestDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAccount_Division" Association="Self.FK_UserAccount_Division">
+            <End Role="Division" EntitySet="Division" />
+            <End Role="UserAccount" EntitySet="UserAccount" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SMISModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SMISEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Activities" EntityType="SMISModel.Activity" />
+          <EntitySet Name="ActivityDetailIDs" EntityType="SMISModel.ActivityDetailID" />
+          <EntitySet Name="Divisions" EntityType="SMISModel.Division" />
+          <EntitySet Name="Logs" EntityType="SMISModel.Log" />
+          <EntitySet Name="Offices" EntityType="SMISModel.Office" />
+          <EntitySet Name="PurchaseOrders" EntityType="SMISModel.PurchaseOrder" />
+          <EntitySet Name="PurchaseOrderDetails" EntityType="SMISModel.PurchaseOrderDetail" />
+          <EntitySet Name="PurchaseRequests" EntityType="SMISModel.PurchaseRequest" />
+          <EntitySet Name="PurchaseRequestDetails" EntityType="SMISModel.PurchaseRequestDetail" />
+          <EntitySet Name="Status" EntityType="SMISModel.Status" />
+          <EntitySet Name="Suppliers" EntityType="SMISModel.Supplier" />
+          <EntitySet Name="TransactionTypes" EntityType="SMISModel.TransactionType" />
+          <EntitySet Name="UserAccounts" EntityType="SMISModel.UserAccount" />
+          <AssociationSet Name="FK_PurchaseRequest_Division" Association="SMISModel.FK_PurchaseRequest_Division">
+            <End Role="Division" EntitySet="Divisions" />
+            <End Role="PurchaseRequest" EntitySet="PurchaseRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAccount_Division" Association="SMISModel.FK_UserAccount_Division">
+            <End Role="Division" EntitySet="Divisions" />
+            <End Role="UserAccount" EntitySet="UserAccounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Logs_Office" Association="SMISModel.FK_Logs_Office">
+            <End Role="Office" EntitySet="Offices" />
+            <End Role="Log" EntitySet="Logs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Logs_PurchaseRequest" Association="SMISModel.FK_Logs_PurchaseRequest">
+            <End Role="PurchaseRequest" EntitySet="PurchaseRequests" />
+            <End Role="Log" EntitySet="Logs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Logs_Status" Association="SMISModel.FK_Logs_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Log" EntitySet="Logs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Logs_UserAccount" Association="SMISModel.FK_Logs_UserAccount">
+            <End Role="UserAccount" EntitySet="UserAccounts" />
+            <End Role="Log" EntitySet="Logs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Status_Office" Association="SMISModel.FK_Status_Office">
+            <End Role="Office" EntitySet="Offices" />
+            <End Role="Status" EntitySet="Status" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAccount_Office" Association="SMISModel.FK_UserAccount_Office">
+            <End Role="Office" EntitySet="Offices" />
+            <End Role="UserAccount" EntitySet="UserAccounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrder_PurchaseRequest" Association="SMISModel.FK_PurchaseOrder_PurchaseRequest">
+            <End Role="PurchaseRequest" EntitySet="PurchaseRequests" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrder_Supplier" Association="SMISModel.FK_PurchaseOrder_Supplier">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrderDetail_PurchaseOrder" Association="SMISModel.FK_PurchaseOrderDetail_PurchaseOrder">
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+            <End Role="PurchaseOrderDetail" EntitySet="PurchaseOrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequest_Status" Association="SMISModel.FK_PurchaseRequest_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="PurchaseRequest" EntitySet="PurchaseRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequest_TransactionType" Association="SMISModel.FK_PurchaseRequest_TransactionType">
+            <End Role="TransactionType" EntitySet="TransactionTypes" />
+            <End Role="PurchaseRequest" EntitySet="PurchaseRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequest_UserAccount" Association="SMISModel.FK_PurchaseRequest_UserAccount">
+            <End Role="UserAccount" EntitySet="UserAccounts" />
+            <End Role="PurchaseRequest" EntitySet="PurchaseRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequestDetail_PurchaseRequest" Association="SMISModel.FK_PurchaseRequestDetail_PurchaseRequest">
+            <End Role="PurchaseRequest" EntitySet="PurchaseRequests" />
+            <End Role="PurchaseRequestDetail" EntitySet="PurchaseRequestDetails" />
+          </AssociationSet>
+          <EntitySet Name="Canvasses" EntityType="SMISModel.Canvass" />
+          <EntitySet Name="CanvassDetails" EntityType="SMISModel.CanvassDetail" />
+          <AssociationSet Name="FK_CanvassDetail_Canvass" Association="SMISModel.FK_CanvassDetail_Canvass">
+            <End Role="Canvass" EntitySet="Canvasses" />
+            <End Role="CanvassDetail" EntitySet="CanvassDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Canvass_PurchaseRequest" Association="SMISModel.FK_Canvass_PurchaseRequest">
+            <End Role="PurchaseRequest" EntitySet="PurchaseRequests" />
+            <End Role="Canvass" EntitySet="Canvasses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CanvassDetail_PurchaseRequestDetail" Association="SMISModel.FK_CanvassDetail_PurchaseRequestDetail">
+            <End Role="PurchaseRequestDetail" EntitySet="PurchaseRequestDetails" />
+            <End Role="CanvassDetail" EntitySet="CanvassDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Canvass_UserAccount" Association="SMISModel.FK_Canvass_UserAccount">
+            <End Role="UserAccount" EntitySet="UserAccounts" />
+            <End Role="Canvass" EntitySet="Canvasses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Canvass_Supplier" Association="SMISModel.FK_Canvass_Supplier">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="Canvass" EntitySet="Canvasses" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Activity">
+          <Key>
+            <PropertyRef Name="ActivityID" />
+          </Key>
+          <Property Name="ActivityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ActivityTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="ActivityDetailID">
+          <Key>
+            <PropertyRef Name="ActivityDetailID1" />
+          </Key>
+          <Property Name="ActivityDetailID1" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ActivityID" Type="Int32" />
+          <Property Name="PurchaseRequestID" Type="Int32" />
+          <Property Name="POAmount" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="Division">
+          <Key>
+            <PropertyRef Name="DivisionID" />
+          </Key>
+          <Property Name="DivisionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DivisionName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DivisionColor" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="DivisionChief" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Designation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PurchaseRequests" Relationship="SMISModel.FK_PurchaseRequest_Division" FromRole="Division" ToRole="PurchaseRequest" />
+          <NavigationProperty Name="UserAccounts" Relationship="SMISModel.FK_UserAccount_Division" FromRole="Division" ToRole="UserAccount" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Name="LogID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PurchaseRequestID" Type="Int32" />
+          <Property Name="StatusID" Type="Int32" Nullable="false" />
+          <Property Name="TransactionDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="OfficeID" Type="Int32" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Office" Relationship="SMISModel.FK_Logs_Office" FromRole="Log" ToRole="Office" />
+          <NavigationProperty Name="PurchaseRequest" Relationship="SMISModel.FK_Logs_PurchaseRequest" FromRole="Log" ToRole="PurchaseRequest" />
+          <NavigationProperty Name="Status" Relationship="SMISModel.FK_Logs_Status" FromRole="Log" ToRole="Status" />
+          <NavigationProperty Name="UserAccount" Relationship="SMISModel.FK_Logs_UserAccount" FromRole="Log" ToRole="UserAccount" />
+        </EntityType>
+        <EntityType Name="Office">
+          <Key>
+            <PropertyRef Name="OfficeID" />
+          </Key>
+          <Property Name="OfficeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DivisionID" Type="Int32" />
+          <Property Name="OfficeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Logs" Relationship="SMISModel.FK_Logs_Office" FromRole="Office" ToRole="Log" />
+          <NavigationProperty Name="Status" Relationship="SMISModel.FK_Status_Office" FromRole="Office" ToRole="Status" />
+          <NavigationProperty Name="UserAccounts" Relationship="SMISModel.FK_UserAccount_Office" FromRole="Office" ToRole="UserAccount" />
+        </EntityType>
+        <EntityType Name="PurchaseOrder">
+          <Key>
+            <PropertyRef Name="PurchaseOrderID" />
+          </Key>
+          <Property Name="PurchaseOrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PurchaseRequestID" Type="Int32" />
+          <Property Name="PurchaseOrderDate" Type="DateTime" Precision="3" />
+          <Property Name="SupplierID" Type="Int32" />
+          <Property Name="ModeofProcurement" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PlaceofDelivery" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateofDelivery" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="UserID" Type="Int32" />
+          <NavigationProperty Name="PurchaseRequest" Relationship="SMISModel.FK_PurchaseOrder_PurchaseRequest" FromRole="PurchaseOrder" ToRole="PurchaseRequest" />
+          <NavigationProperty Name="Supplier" Relationship="SMISModel.FK_PurchaseOrder_Supplier" FromRole="PurchaseOrder" ToRole="Supplier" />
+          <NavigationProperty Name="PurchaseOrderDetails" Relationship="SMISModel.FK_PurchaseOrderDetail_PurchaseOrder" FromRole="PurchaseOrder" ToRole="PurchaseOrderDetail" />
+        </EntityType>
+        <EntityType Name="PurchaseOrderDetail">
+          <Key>
+            <PropertyRef Name="PurchaseOrderDetailID" />
+          </Key>
+          <Property Name="PurchaseOrderDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PurchaseOrderID" Type="Int32" />
+          <Property Name="ActivityDate" Type="DateTime" Precision="3" />
+          <Property Name="ItemName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Specification" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Unit" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Quantity" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="UnitCost" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalCost" Type="Decimal" Precision="37" Scale="6" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="PurchaseOrder" Relationship="SMISModel.FK_PurchaseOrderDetail_PurchaseOrder" FromRole="PurchaseOrderDetail" ToRole="PurchaseOrder" />
+        </EntityType>
+        <EntityType Name="PurchaseRequest">
+          <Key>
+            <PropertyRef Name="PurchaseRequestID" />
+          </Key>
+          <Property Name="PurchaseRequestID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ControlNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PRNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PreparedBy" Type="Int32" />
+          <Property Name="DatePRAssigned" Type="DateTime" Precision="3" />
+          <Property Name="DatePrepared" Type="DateTime" Precision="3" />
+          <Property Name="DivisionID" Type="Int32" Nullable="false" />
+          <Property Name="Purpose" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TransactionTypeID" Type="Int32" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="StatusID" Type="Int32" />
+          <Property Name="Remarks" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsReceived" Type="Boolean" />
+          <Property Name="IsCancelled" Type="Boolean" />
+          <Property Name="ForRevision" Type="Boolean" />
+          <Property Name="UserID" Type="Int32" />
+          <NavigationProperty Name="Division" Relationship="SMISModel.FK_PurchaseRequest_Division" FromRole="PurchaseRequest" ToRole="Division" />
+          <NavigationProperty Name="Logs" Relationship="SMISModel.FK_Logs_PurchaseRequest" FromRole="PurchaseRequest" ToRole="Log" />
+          <NavigationProperty Name="PurchaseOrders" Relationship="SMISModel.FK_PurchaseOrder_PurchaseRequest" FromRole="PurchaseRequest" ToRole="PurchaseOrder" />
+          <NavigationProperty Name="Status" Relationship="SMISModel.FK_PurchaseRequest_Status" FromRole="PurchaseRequest" ToRole="Status" />
+          <NavigationProperty Name="TransactionType" Relationship="SMISModel.FK_PurchaseRequest_TransactionType" FromRole="PurchaseRequest" ToRole="TransactionType" />
+          <NavigationProperty Name="UserAccount" Relationship="SMISModel.FK_PurchaseRequest_UserAccount" FromRole="PurchaseRequest" ToRole="UserAccount" />
+          <NavigationProperty Name="PurchaseRequestDetails" Relationship="SMISModel.FK_PurchaseRequestDetail_PurchaseRequest" FromRole="PurchaseRequest" ToRole="PurchaseRequestDetail" />
+          <NavigationProperty Name="Canvasses" Relationship="SMISModel.FK_Canvass_PurchaseRequest" FromRole="PurchaseRequest" ToRole="Canvass" />
+        </EntityType>
+        <EntityType Name="PurchaseRequestDetail">
+          <Key>
+            <PropertyRef Name="PurchaseRequestDetailID" />
+          </Key>
+          <Property Name="PurchaseRequestDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PurchaseRequestID" Type="Int32" />
+          <Property Name="ActivityDate" Type="DateTime" Precision="3" />
+          <Property Name="ItemName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Specification" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Unit" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Quantity" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="UnitCost" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalCost" Type="Decimal" Precision="37" Scale="6" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="PurchaseRequest" Relationship="SMISModel.FK_PurchaseRequestDetail_PurchaseRequest" FromRole="PurchaseRequestDetail" ToRole="PurchaseRequest" />
+          <NavigationProperty Name="CanvassDetails" Relationship="SMISModel.FK_CanvassDetail_PurchaseRequestDetail" FromRole="PurchaseRequestDetail" ToRole="CanvassDetail" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="StatusID" />
+          </Key>
+          <Property Name="StatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Status1" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="OfficeID" Type="Int32" />
+          <Property Name="Step" Type="Int16" />
+          <NavigationProperty Name="Logs" Relationship="SMISModel.FK_Logs_Status" FromRole="Status" ToRole="Log" />
+          <NavigationProperty Name="Office" Relationship="SMISModel.FK_Status_Office" FromRole="Status" ToRole="Office" />
+          <NavigationProperty Name="PurchaseRequests" Relationship="SMISModel.FK_PurchaseRequest_Status" FromRole="Status" ToRole="PurchaseRequest" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="SupplierID" />
+          </Key>
+          <Property Name="SupplierID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SupplierName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="TIN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PurchaseOrders" Relationship="SMISModel.FK_PurchaseOrder_Supplier" FromRole="Supplier" ToRole="PurchaseOrder" />
+          <NavigationProperty Name="Canvasses" Relationship="SMISModel.FK_Canvass_Supplier" FromRole="Supplier" ToRole="Canvass" />
+        </EntityType>
+        <EntityType Name="TransactionType">
+          <Key>
+            <PropertyRef Name="TransactionTypeID" />
+          </Key>
+          <Property Name="TransactionTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransactionType1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PurchaseRequests" Relationship="SMISModel.FK_PurchaseRequest_TransactionType" FromRole="TransactionType" ToRole="PurchaseRequest" />
+        </EntityType>
+        <EntityType Name="UserAccount">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccountName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Position" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="DivisionID" Type="Int32" />
+          <Property Name="OfficeID" Type="Int32" />
+          <Property Name="Username" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Division" Relationship="SMISModel.FK_UserAccount_Division" FromRole="UserAccount" ToRole="Division" />
+          <NavigationProperty Name="Logs" Relationship="SMISModel.FK_Logs_UserAccount" FromRole="UserAccount" ToRole="Log" />
+          <NavigationProperty Name="Office" Relationship="SMISModel.FK_UserAccount_Office" FromRole="UserAccount" ToRole="Office" />
+          <NavigationProperty Name="PurchaseRequests" Relationship="SMISModel.FK_PurchaseRequest_UserAccount" FromRole="UserAccount" ToRole="PurchaseRequest" />
+          <NavigationProperty Name="Canvasses" Relationship="SMISModel.FK_Canvass_UserAccount" FromRole="UserAccount" ToRole="Canvass" />
+        </EntityType>
+        <Association Name="FK_PurchaseRequest_Division">
+          <End Type="SMISModel.Division" Role="Division" Multiplicity="1" />
+          <End Type="SMISModel.PurchaseRequest" Role="PurchaseRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Division">
+              <PropertyRef Name="DivisionID" />
+            </Principal>
+            <Dependent Role="PurchaseRequest">
+              <PropertyRef Name="DivisionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAccount_Division">
+          <End Type="SMISModel.Division" Role="Division" Multiplicity="0..1" />
+          <End Type="SMISModel.UserAccount" Role="UserAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Division">
+              <PropertyRef Name="DivisionID" />
+            </Principal>
+            <Dependent Role="UserAccount">
+              <PropertyRef Name="DivisionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Logs_Office">
+          <End Type="SMISModel.Office" Role="Office" Multiplicity="0..1" />
+          <End Type="SMISModel.Log" Role="Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Office">
+              <PropertyRef Name="OfficeID" />
+            </Principal>
+            <Dependent Role="Log">
+              <PropertyRef Name="OfficeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Logs_PurchaseRequest">
+          <End Type="SMISModel.PurchaseRequest" Role="PurchaseRequest" Multiplicity="0..1" />
+          <End Type="SMISModel.Log" Role="Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseRequest">
+              <PropertyRef Name="PurchaseRequestID" />
+            </Principal>
+            <Dependent Role="Log">
+              <PropertyRef Name="PurchaseRequestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Logs_Status">
+          <End Type="SMISModel.Status" Role="Status" Multiplicity="1" />
+          <End Type="SMISModel.Log" Role="Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="Log">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Logs_UserAccount">
+          <End Type="SMISModel.UserAccount" Role="UserAccount" Multiplicity="1" />
+          <End Type="SMISModel.Log" Role="Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Log">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Status_Office">
+          <End Type="SMISModel.Office" Role="Office" Multiplicity="0..1" />
+          <End Type="SMISModel.Status" Role="Status" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Office">
+              <PropertyRef Name="OfficeID" />
+            </Principal>
+            <Dependent Role="Status">
+              <PropertyRef Name="OfficeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAccount_Office">
+          <End Type="SMISModel.Office" Role="Office" Multiplicity="0..1" />
+          <End Type="SMISModel.UserAccount" Role="UserAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Office">
+              <PropertyRef Name="OfficeID" />
+            </Principal>
+            <Dependent Role="UserAccount">
+              <PropertyRef Name="OfficeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrder_PurchaseRequest">
+          <End Type="SMISModel.PurchaseRequest" Role="PurchaseRequest" Multiplicity="0..1" />
+          <End Type="SMISModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseRequest">
+              <PropertyRef Name="PurchaseRequestID" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="PurchaseRequestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrder_Supplier">
+          <End Type="SMISModel.Supplier" Role="Supplier" Multiplicity="0..1" />
+          <End Type="SMISModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierID" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrderDetail_PurchaseOrder">
+          <End Type="SMISModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="0..1" />
+          <End Type="SMISModel.PurchaseOrderDetail" Role="PurchaseOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrder">
+              <PropertyRef Name="PurchaseOrderID" />
+            </Principal>
+            <Dependent Role="PurchaseOrderDetail">
+              <PropertyRef Name="PurchaseOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequest_Status">
+          <End Type="SMISModel.Status" Role="Status" Multiplicity="0..1" />
+          <End Type="SMISModel.PurchaseRequest" Role="PurchaseRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="PurchaseRequest">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequest_TransactionType">
+          <End Type="SMISModel.TransactionType" Role="TransactionType" Multiplicity="0..1" />
+          <End Type="SMISModel.PurchaseRequest" Role="PurchaseRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransactionType">
+              <PropertyRef Name="TransactionTypeID" />
+            </Principal>
+            <Dependent Role="PurchaseRequest">
+              <PropertyRef Name="TransactionTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequest_UserAccount">
+          <End Type="SMISModel.UserAccount" Role="UserAccount" Multiplicity="0..1" />
+          <End Type="SMISModel.PurchaseRequest" Role="PurchaseRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="PurchaseRequest">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequestDetail_PurchaseRequest">
+          <End Type="SMISModel.PurchaseRequest" Role="PurchaseRequest" Multiplicity="0..1" />
+          <End Type="SMISModel.PurchaseRequestDetail" Role="PurchaseRequestDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseRequest">
+              <PropertyRef Name="PurchaseRequestID" />
+            </Principal>
+            <Dependent Role="PurchaseRequestDetail">
+              <PropertyRef Name="PurchaseRequestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Canvass">
+          <Key>
+            <PropertyRef Name="CanvassID" />
+          </Key>
+          <Property Name="CanvassID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateCanvass" Type="DateTime" Precision="3" />
+          <Property Name="SupplierID" Type="Int32" />
+          <Property Name="PurchaseRequestID" Type="Int32" />
+          <Property Name="Canvasser" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CanvassDetails" Relationship="SMISModel.FK_CanvassDetail_Canvass" FromRole="Canvass" ToRole="CanvassDetail" />
+          <NavigationProperty Name="PurchaseRequest" Relationship="SMISModel.FK_Canvass_PurchaseRequest" FromRole="Canvass" ToRole="PurchaseRequest" />
+          <Property Name="UserID" Type="Int32" />
+          <NavigationProperty Name="UserAccount" Relationship="SMISModel.FK_Canvass_UserAccount" FromRole="Canvass" ToRole="UserAccount" />
+          <NavigationProperty Name="Supplier" Relationship="SMISModel.FK_Canvass_Supplier" FromRole="Canvass" ToRole="Supplier" />
+          <Property Name="Winner" Type="Boolean" />
+          <Property Name="TimeOpened" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ACTNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ACDNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="CanvassDetail">
+          <Key>
+            <PropertyRef Name="CanvassDetailID" />
+          </Key>
+          <Property Name="CanvassDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CanvassID" Type="Int32" />
+          <Property Name="PurchaseRequestDetailID" Type="Int32" />
+          <Property Name="UnitPrice" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="Canvass" Relationship="SMISModel.FK_CanvassDetail_Canvass" FromRole="CanvassDetail" ToRole="Canvass" />
+          <NavigationProperty Name="PurchaseRequestDetail" Relationship="SMISModel.FK_CanvassDetail_PurchaseRequestDetail" FromRole="CanvassDetail" ToRole="PurchaseRequestDetail" />
+        </EntityType>
+        <Association Name="FK_CanvassDetail_Canvass">
+          <End Type="SMISModel.Canvass" Role="Canvass" Multiplicity="0..1" />
+          <End Type="SMISModel.CanvassDetail" Role="CanvassDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Canvass">
+              <PropertyRef Name="CanvassID" />
+            </Principal>
+            <Dependent Role="CanvassDetail">
+              <PropertyRef Name="CanvassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Canvass_PurchaseRequest">
+          <End Type="SMISModel.PurchaseRequest" Role="PurchaseRequest" Multiplicity="0..1" />
+          <End Type="SMISModel.Canvass" Role="Canvass" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseRequest">
+              <PropertyRef Name="PurchaseRequestID" />
+            </Principal>
+            <Dependent Role="Canvass">
+              <PropertyRef Name="PurchaseRequestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CanvassDetail_PurchaseRequestDetail">
+          <End Type="SMISModel.PurchaseRequestDetail" Role="PurchaseRequestDetail" Multiplicity="0..1" />
+          <End Type="SMISModel.CanvassDetail" Role="CanvassDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseRequestDetail">
+              <PropertyRef Name="PurchaseRequestDetailID" />
+            </Principal>
+            <Dependent Role="CanvassDetail">
+              <PropertyRef Name="PurchaseRequestDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Canvass_UserAccount">
+          <End Type="SMISModel.UserAccount" Role="UserAccount" Multiplicity="0..1" />
+          <End Type="SMISModel.Canvass" Role="Canvass" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Canvass">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Canvass_Supplier">
+          <End Type="SMISModel.Supplier" Role="Supplier" Multiplicity="0..1" />
+          <End Type="SMISModel.Canvass" Role="Canvass" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierID" />
+            </Principal>
+            <Dependent Role="Canvass">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SMISModelStoreContainer" CdmEntityContainer="SMISEntities">
+          <EntitySetMapping Name="Activities">
+            <EntityTypeMapping TypeName="SMISModel.Activity">
+              <MappingFragment StoreEntitySet="Activity">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="ActivityTitle" ColumnName="ActivityTitle" />
+                <ScalarProperty Name="ActivityID" ColumnName="ActivityID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ActivityDetailIDs">
+            <EntityTypeMapping TypeName="SMISModel.ActivityDetailID">
+              <MappingFragment StoreEntitySet="ActivityDetailID">
+                <ScalarProperty Name="POAmount" ColumnName="POAmount" />
+                <ScalarProperty Name="PurchaseRequestID" ColumnName="PurchaseRequestID" />
+                <ScalarProperty Name="ActivityID" ColumnName="ActivityID" />
+                <ScalarProperty Name="ActivityDetailID1" ColumnName="ActivityDetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Divisions">
+            <EntityTypeMapping TypeName="SMISModel.Division">
+              <MappingFragment StoreEntitySet="Division">
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="DivisionChief" ColumnName="DivisionChief" />
+                <ScalarProperty Name="DivisionColor" ColumnName="DivisionColor" />
+                <ScalarProperty Name="DivisionName" ColumnName="DivisionName" />
+                <ScalarProperty Name="DivisionID" ColumnName="DivisionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="SMISModel.Log">
+              <MappingFragment StoreEntitySet="Logs">
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="OfficeID" ColumnName="OfficeID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="PurchaseRequestID" ColumnName="PurchaseRequestID" />
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Offices">
+            <EntityTypeMapping TypeName="SMISModel.Office">
+              <MappingFragment StoreEntitySet="Office">
+                <ScalarProperty Name="OfficeName" ColumnName="OfficeName" />
+                <ScalarProperty Name="DivisionID" ColumnName="DivisionID" />
+                <ScalarProperty Name="OfficeID" ColumnName="OfficeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseOrders">
+            <EntityTypeMapping TypeName="SMISModel.PurchaseOrder">
+              <MappingFragment StoreEntitySet="PurchaseOrder">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="DateofDelivery" ColumnName="DateofDelivery" />
+                <ScalarProperty Name="PlaceofDelivery" ColumnName="PlaceofDelivery" />
+                <ScalarProperty Name="ModeofProcurement" ColumnName="ModeofProcurement" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="PurchaseOrderDate" ColumnName="PurchaseOrderDate" />
+                <ScalarProperty Name="PurchaseRequestID" ColumnName="PurchaseRequestID" />
+                <ScalarProperty Name="PurchaseOrderID" ColumnName="PurchaseOrderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseOrderDetails">
+            <EntityTypeMapping TypeName="SMISModel.PurchaseOrderDetail">
+              <MappingFragment StoreEntitySet="PurchaseOrderDetail">
+                <ScalarProperty Name="TotalCost" ColumnName="TotalCost" />
+                <ScalarProperty Name="UnitCost" ColumnName="UnitCost" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="Specification" ColumnName="Specification" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ActivityDate" ColumnName="ActivityDate" />
+                <ScalarProperty Name="PurchaseOrderID" ColumnName="PurchaseOrderID" />
+                <ScalarProperty Name="PurchaseOrderDetailID" ColumnName="PurchaseOrderDetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseRequests">
+            <EntityTypeMapping TypeName="SMISModel.PurchaseRequest">
+              <MappingFragment StoreEntitySet="PurchaseRequest">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ForRevision" ColumnName="ForRevision" />
+                <ScalarProperty Name="IsCancelled" ColumnName="IsCancelled" />
+                <ScalarProperty Name="IsReceived" ColumnName="IsReceived" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="TransactionTypeID" ColumnName="TransactionTypeID" />
+                <ScalarProperty Name="Purpose" ColumnName="Purpose" />
+                <ScalarProperty Name="DivisionID" ColumnName="DivisionID" />
+                <ScalarProperty Name="DatePrepared" ColumnName="DatePrepared" />
+                <ScalarProperty Name="DatePRAssigned" ColumnName="DatePRAssigned" />
+                <ScalarProperty Name="PreparedBy" ColumnName="PreparedBy" />
+                <ScalarProperty Name="PRNumber" ColumnName="PRNumber" />
+                <ScalarProperty Name="ControlNumber" ColumnName="ControlNumber" />
+                <ScalarProperty Name="PurchaseRequestID" ColumnName="PurchaseRequestID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseRequestDetails">
+            <EntityTypeMapping TypeName="SMISModel.PurchaseRequestDetail">
+              <MappingFragment StoreEntitySet="PurchaseRequestDetail">
+                <ScalarProperty Name="TotalCost" ColumnName="TotalCost" />
+                <ScalarProperty Name="UnitCost" ColumnName="UnitCost" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="Specification" ColumnName="Specification" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ActivityDate" ColumnName="ActivityDate" />
+                <ScalarProperty Name="PurchaseRequestID" ColumnName="PurchaseRequestID" />
+                <ScalarProperty Name="PurchaseRequestDetailID" ColumnName="PurchaseRequestDetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="SMISModel.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="Step" ColumnName="Step" />
+                <ScalarProperty Name="OfficeID" ColumnName="OfficeID" />
+                <ScalarProperty Name="Status1" ColumnName="Status" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="SMISModel.Supplier">
+              <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="TIN" ColumnName="TIN" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TransactionTypes">
+            <EntityTypeMapping TypeName="SMISModel.TransactionType">
+              <MappingFragment StoreEntitySet="TransactionType">
+                <ScalarProperty Name="TransactionType1" ColumnName="TransactionType" />
+                <ScalarProperty Name="TransactionTypeID" ColumnName="TransactionTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAccounts">
+            <EntityTypeMapping TypeName="SMISModel.UserAccount">
+              <MappingFragment StoreEntitySet="UserAccount">
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="OfficeID" ColumnName="OfficeID" />
+                <ScalarProperty Name="DivisionID" ColumnName="DivisionID" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="AccountName" ColumnName="AccountName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Canvasses">
+            <EntityTypeMapping TypeName="SMISModel.Canvass">
+              <MappingFragment StoreEntitySet="Canvass">
+                <ScalarProperty Name="ACDNo" ColumnName="ACDNo" />
+                <ScalarProperty Name="ACTNo" ColumnName="ACTNo" />
+                <ScalarProperty Name="TimeOpened" ColumnName="TimeOpened" />
+                <ScalarProperty Name="Winner" ColumnName="Winner" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Canvasser" ColumnName="Canvasser" />
+                <ScalarProperty Name="PurchaseRequestID" ColumnName="PurchaseRequestID" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="DateCanvass" ColumnName="DateCanvass" />
+                <ScalarProperty Name="CanvassID" ColumnName="CanvassID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CanvassDetails">
+            <EntityTypeMapping TypeName="SMISModel.CanvassDetail">
+              <MappingFragment StoreEntitySet="CanvassDetail">
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="PurchaseRequestDetailID" ColumnName="PurchaseRequestDetailID" />
+                <ScalarProperty Name="CanvassID" ColumnName="CanvassID" />
+                <ScalarProperty Name="CanvassDetailID" ColumnName="CanvassDetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

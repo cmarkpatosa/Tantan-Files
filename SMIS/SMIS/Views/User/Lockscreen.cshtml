@@ -1,0 +1,76 @@
+﻿@model SMIS.UserAccount
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>DILG XII | SMIS Version 1.0</title>
+    <!-- IonIcons -->
+    @*<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">*@
+    @Styles.Render("~/adminlte/css")
+    <!-- Google Font: Source Sans Pro -->
+    @*<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">*@
+</head>
+<body class="hold-transition lockscreen">
+    <!-- Automatic element centering -->
+    <div class="lockscreen-wrapper">
+        <div class="lockscreen-logo">
+            <a href="../../index2.html"><b>Admin</b>LTE</a>
+        </div>
+        <!-- User name -->
+        <div class="lockscreen-name">John Doe</div>
+
+        <!-- START LOCK SCREEN ITEM -->
+        <div class="lockscreen-item">
+            <!-- lockscreen image -->
+            <div class="lockscreen-image">
+                <img src="../../dist/img/user1-128x128.jpg" alt="User Image">
+            </div>
+            <!-- /.lockscreen-image -->
+            <!-- lockscreen credentials (contains the form) -->
+            @*<form class="lockscreen-credentials" role="form" action="../Home/Loggedin">
+                <div class="input-group">
+                    <input type="password" class="form-control" name="UserID" placeholder="password">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn"><i class="fas fa-arrow-right text-muted"></i></button>
+                    </div>
+                </div>
+            </form>*@
+
+            @using (Html.BeginForm("Loggedin", "Home", FormMethod.Post, new { @class = "lockscreen-credentials" }))
+            {
+
+                <div class="input-group">
+                    @Html.PasswordFor(model => model.UserID, new { @class = "form-control", @placeholder = "password" })
+                    <div class="input-group-append">
+                        <button type="submit" class="btn"><i class="fas fa-arrow-right text-muted"></i></button>
+                    </div>
+                </div>
+            }
+
+                    <!-- /.lockscreen credentials -->
+
+</div>
+        <!-- /.lockscreen-item -->
+        <div class="help-block text-center">
+            Enter your password to retrieve your session
+        </div>
+        <div class="text-center">
+            <a href="login.html">Or sign in as a different user</a>
+        </div>
+        <div class="lockscreen-footer text-center">
+            Copyright &copy; 2014-2019 <b><a href="http://adminlte.io" class="text-black">AdminLTE.io</a></b><br>
+            All rights reserved
+        </div>
+    </div>
+    @*@Scripts.Render("~/adminlte/jquery_script")*@
+    @*@Scripts.Render("~/adminlte/jquery")*@
+</body>
+</html>

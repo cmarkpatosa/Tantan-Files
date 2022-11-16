@@ -1,0 +1,22 @@
+﻿<div class="modal fade" id="modal-preparedby">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Signatory</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Prepared By</label>
+                    @Html.DropDownList("UserID", ViewData["PreparedBy"] as SelectList, "", new { @class = "form-control", @id = "UserID" })
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+                <button type="button" id="btnGenerateRIS" class="btn btn-primary">Print RIS</button>
+            </div>
+        </div>
+    </div>
+</div>

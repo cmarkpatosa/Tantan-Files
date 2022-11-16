@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="30a3d550fa0548be94ffae662c5b086f" Name="Diagram1">
+        <EntityTypeShape EntityType="SMISModel.Activity" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="SMISModel.ActivityDetailID" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="SMISModel.Division" Width="1.5" PointX="0.75" PointY="3.875" />
+        <EntityTypeShape EntityType="SMISModel.Log" Width="1.5" PointX="5.25" PointY="11.25" />
+        <EntityTypeShape EntityType="SMISModel.Office" Width="1.5" PointX="0.75" PointY="8" />
+        <EntityTypeShape EntityType="SMISModel.PurchaseOrder" Width="1.5" PointX="10.5" PointY="11.125" />
+        <EntityTypeShape EntityType="SMISModel.PurchaseOrderDetail" Width="1.5" PointX="12.75" PointY="11.375" />
+        <EntityTypeShape EntityType="SMISModel.PurchaseRequest" Width="1.5" PointX="8.25" PointY="10.125" />
+        <EntityTypeShape EntityType="SMISModel.PurchaseRequestDetail" Width="1.5" PointX="10.5" PointY="15.375" />
+        <EntityTypeShape EntityType="SMISModel.Status" Width="1.5" PointX="3" PointY="15.875" />
+        <EntityTypeShape EntityType="SMISModel.Supplier" Width="1.5" PointX="8.25" PointY="6.875" />
+        <EntityTypeShape EntityType="SMISModel.TransactionType" Width="1.5" PointX="6" PointY="8" />
+        <EntityTypeShape EntityType="SMISModel.UserAccount" Width="1.5" PointX="3" PointY="7.375" />
+        <AssociationConnector Association="SMISModel.FK_PurchaseRequest_Division" />
+        <AssociationConnector Association="SMISModel.FK_UserAccount_Division" />
+        <AssociationConnector Association="SMISModel.FK_Logs_Office" />
+        <AssociationConnector Association="SMISModel.FK_Logs_PurchaseRequest" />
+        <AssociationConnector Association="SMISModel.FK_Logs_Status" />
+        <AssociationConnector Association="SMISModel.FK_Logs_UserAccount" />
+        <AssociationConnector Association="SMISModel.FK_Status_Office" />
+        <AssociationConnector Association="SMISModel.FK_UserAccount_Office" />
+        <AssociationConnector Association="SMISModel.FK_PurchaseOrder_PurchaseRequest" />
+        <AssociationConnector Association="SMISModel.FK_PurchaseOrder_Supplier" />
+        <AssociationConnector Association="SMISModel.FK_PurchaseOrderDetail_PurchaseOrder" />
+        <AssociationConnector Association="SMISModel.FK_PurchaseRequest_Status" />
+        <AssociationConnector Association="SMISModel.FK_PurchaseRequest_TransactionType" />
+        <AssociationConnector Association="SMISModel.FK_PurchaseRequest_UserAccount" />
+        <AssociationConnector Association="SMISModel.FK_PurchaseRequestDetail_PurchaseRequest" />
+        <EntityTypeShape EntityType="SMISModel.Canvass" Width="1.5" PointX="3.375" PointY="3.75" />
+        <EntityTypeShape EntityType="SMISModel.CanvassDetail" Width="1.5" PointX="5.375" PointY="0.75" />
+        <AssociationConnector Association="SMISModel.FK_CanvassDetail_Canvass" />
+        <AssociationConnector Association="SMISModel.FK_Canvass_PurchaseRequest" />
+        <AssociationConnector Association="SMISModel.FK_CanvassDetail_PurchaseRequestDetail" />
+        <AssociationConnector Association="SMISModel.FK_Canvass_UserAccount" />
+        <AssociationConnector Association="SMISModel.FK_Canvass_Supplier" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
